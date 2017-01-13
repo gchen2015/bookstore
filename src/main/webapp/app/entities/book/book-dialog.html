@@ -1,0 +1,77 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myBookLabel">Create or edit a Book</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.book.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.book.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_title">Title</label>
+            <input type="text" class="form-control" name="title" id="field_title"
+                    ng-model="vm.book.title"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                    ng-model="vm.book.description"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_publicationDate">Publication Date</label>
+                <div class="input-group">
+                    <input id="field_publicationDate" type="text" class="form-control" name="publicationDate" uib-datepicker-popup="{{dateformat}}" ng-model="vm.book.publicationDate" is-open="vm.datePickerOpenStatus.publicationDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('publicationDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_price">Price</label>
+            <input type="number" class="form-control" name="price" id="field_price"
+                    ng-model="vm.book.price"
+                     />
+        </div>
+        <!--
+        <div class="form-group">
+            <label class="control-label" for="field_photo">Photo</label>
+            <input type="text" class="form-control" name="photo" id="field_photo"
+                    ng-model="vm.book.photo"
+                     />
+        </div>
+-->
+        <div class="form-group">
+
+          <!--  <label for="field_upload">详情大图片</label> -->
+            <!--<input type="text" class="form-control" name="image1" id="field_image1" ng-model="product.image1" />-->
+            <img ng-if="vm.book.photo != null" ng-src="/assets/images/upload/{{vm.book.photo}}" style="height:80px;width:80px" alt="wine">
+            <div class="button select-picture-button padding" accept="image/*" ngf-keep="true"
+                 ngf-keep-distinct="true" ngf-select="onFileSelect(image1s, 'image')" ng-model="image1s" ngf-multiple="true">
+                <button >选择图片</button>
+            </div>
+
+            <img ng-repeat="file in image1s" ngf-src="file" class="padding" style="max-height: 10rem; max-width: 10rem; border-radius: 5px">
+
+            <br>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
