@@ -29,10 +29,10 @@ import java.util.Optional;
 public class BookResource {
 
     private final Logger log = LoggerFactory.getLogger(BookResource.class);
-        
+
     @Inject
     private BookRepository bookRepository;
-    
+
     /**
      * POST  /books : Create a new book.
      *
@@ -93,7 +93,7 @@ public class BookResource {
     public ResponseEntity<List<Book>> getAllBooks(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of Books");
-        Page<Book> page = bookRepository.findAll(pageable); 
+        Page<Book> page = bookRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/books");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -132,6 +132,18 @@ public class BookResource {
         log.debug("REST request to delete Book : {}", id);
         bookRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("book", id.toString())).build();
+    }
+
+
+    /**
+     * GET  /books -> get all the books.
+     */
+
+    @RequestMapping(value = "/books/news", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Book>> getAllNewsBooks() throws URISyntaxException {
+        List<Book> news = bookRepository.findAllNewsBooks();
+        return new ResponseEntity<>(news, HttpStatus.OK);
     }
 
 }

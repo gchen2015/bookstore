@@ -12,4 +12,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface BookRepository extends JpaRepository<Book,Long> {
 
+    @Query("select b from Book AS b  order by b.publicationDate desc ")
+    public List<Book> findAllNewsBooks();
 }
